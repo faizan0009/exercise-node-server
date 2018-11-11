@@ -1,0 +1,10 @@
+#docs/
+build/
+themes/
+.vscode/
+node_modules/
+
+.env
+npm-debug.log
+npm-debug.log.*
+package-lock.json

@@ -1,0 +1,30 @@
+# Group Microservice
+
+## microservice greeting [/greeting]
+greeting request description and title here
+
+### Request a greeting [POST]
+**Notes**
+
+Request
+- greeting              : greeting message to return to user
+
+Response
+- greeting              : greeting message returned to user
+
+
++ Request Update JSON Message (application/json)
+
+    + Attributes (microserviceRequest)
+
++ Response 200 (application/json)
+
+    + Attributes (microserviceResponse)
+
+# Data Structures
+
+## microserviceRequest (object)
++ greeting             : `example greeting` (string) (required)
+
+## microserviceResponse (object)
++ greeting             : `example greeting from server` (string)

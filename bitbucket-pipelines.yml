@@ -1,0 +1,56 @@
+image: node:carbon
+
+pipelines:
+  default:
+    - step:
+        name: Development compilation
+        caches:
+          - node
+        script:
+          ##################################################################################
+          ## Setup Node environment.
+          ## Ensure private packages can be loaded from npm Define the following variables
+          ## Please define these in the "environment settings" offered by bitbucket.
+          ##
+          ##   * NPM_TOKEN : secret token for installing private modules. This
+          ##                 this token can be found in your .npmrc, after logging in.
+          ##   * NPM_REGISTRY_URL(Optional) : the full URL of your private registry
+          ##                                  defaults to registry.npmjs.org.
+          ## Install all global packages required from npm
+          ##################################################################################
+          # Generates a .npmrc file configured for installing private modules.
+          # NOTE! :If this is not required, comment the next line out.
+          - printf "//`node -p \"require('url').parse(process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org').host\"`/:_authToken=${NPM_TOKEN}\nregistry=${NPM_REGISTRY_URL:-https://registry.npmjs.org}\n" >> ~/.npmrc
+          # Install dependencies.
+          - npm install
+
+          ##################################################################################
+          ## Run solution compilation as follow:
+          ##    * linter
+          ##    * test suite
+          ##    * compiler
+          ##################################################################################
+
+          ##################################################################################
+          ## Validation
+          # run lints
+          - npm run lint
+
+          ##################################################################################
+          ## test suite
+          # run tests on dev mode
+          - npm run test
+          # # run test suite documentation
+          # - npm run document:test
+
+          ##################################################################################
+          ## documentation
+          # run blueprint documentation
+          - npm run document:blueprint
+          # run typedoc documentation
+          - npm run document:typedoc
+
+          ##################################################################################
+          ## compilation
+          # run compiler
+          - npm run build
