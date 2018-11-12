@@ -8,6 +8,7 @@ import { json } from 'body-parser'
 import { Server } from 'http'
 import { log } from '../log'
 import { Env } from '@simplus/base-ts-utils'
+var cors = require('cors');
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -19,6 +20,7 @@ app.locals.email = 'Developer@simplusinnovation.com'
 app.locals.issues = 'https://bitbucket.org/simplusinnovation/microservice/issues'
 app.locals.baseUri = process.env.BASE_URI || '/api/v1/microservice'
 
+app.use(cors({origin:true,credentials: true}));
 app.use(json())
 app.use((_req: express.Request, res: express.Response, next: express.NextFunction): void => {
 	res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
